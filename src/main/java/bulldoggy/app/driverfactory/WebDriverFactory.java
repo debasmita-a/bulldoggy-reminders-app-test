@@ -14,7 +14,7 @@ public class WebDriverFactory {
 
 	private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
 	private BrowserOptionsSettings options;
-	private Properties prop;
+	//private Properties prop;
 
 	/**
 	 * This method returns the WebDriver reference. Here we are initializing the
@@ -25,8 +25,8 @@ public class WebDriverFactory {
 	 * @return WebDriver
 	 */
 
-	public WebDriver getWebDriverDriver(Properties prop) {
-		this.prop = prop;
+	public WebDriver getWebDriver(Properties prop) {
+
 		options = new BrowserOptionsSettings(prop);
 
 		String browser = prop.getProperty("browser");
@@ -35,21 +35,21 @@ public class WebDriverFactory {
 		switch (browser.toLowerCase().trim()) {
 		case "chrome":
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
-				getRemoteWebDriver("chrome");
+				//getRemoteWebDriver("chrome");
 			} else {
 				tlDriver.set(new ChromeDriver(options.getChromeOptions()));
 			}
 			break;
 		case "firefox":
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
-				getRemoteWebDriver("firefox");
+				//getRemoteWebDriver("firefox");
 			} else {
 				tlDriver.set(new FirefoxDriver(options.getFirefoxOptions()));
 			}
 			break;
 		case "edge":
 			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
-				getRemoteWebDriver("edge");
+				//getRemoteWebDriver("edge");
 			} else {
 				tlDriver.set(new EdgeDriver(options.getEdgeOptionsOptions()));
 			}
@@ -74,11 +74,13 @@ public class WebDriverFactory {
 	 * @return
 	 */
 
-	public static WebDriver getDriver() {
+	private static WebDriver getDriver() {
 		return tlDriver.get();
 	}
 
-	private void getRemoteWebDriver(String browser) {
+	public WebDriver getRemoteWebDriver(Properties prop) {
+		options = new BrowserOptionsSettings(prop);
+		String browser = prop.getProperty("browser");
 		System.out.println("Running tests on selenium grid server:::" + browser);
 
 		try {
@@ -99,6 +101,12 @@ public class WebDriverFactory {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
+		
+		getDriver().get(prop.getProperty("appUrl"));
+		getDriver().manage().deleteAllCookies();
+		getDriver().manage().window().maximize();
+
+		return getDriver();
 
 	}
 }

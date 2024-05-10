@@ -16,6 +16,7 @@ public class AppBaseTest {
 	protected Properties prop;
 	protected WebDriverFactory driverFactory;
 	protected ConfigFileReader configReader;
+
 	protected LoginPage loginPage;
 	
 	@BeforeTest
@@ -23,7 +24,13 @@ public class AppBaseTest {
 		driverFactory = new WebDriverFactory();
 		configReader = new ConfigFileReader();
 		prop = configReader.getProp();
-		driver = driverFactory.getWebDriverDriver(prop);
+		
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			driver = driverFactory.getRemoteWebDriver(prop);
+		}else {
+			driver = driverFactory.getWebDriver(prop);
+		}
+		
 		loginPage = new LoginPage(driver);
 	}
 	
