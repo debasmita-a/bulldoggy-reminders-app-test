@@ -7,6 +7,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import bulldoggy.app.appPages.LoginPage;
+import bulldoggy.app.appPages.RemindersPage;
 import bulldoggy.app.driverfactory.ConfigFileReader;
 import bulldoggy.app.driverfactory.WebDriverFactory;
 
@@ -18,6 +19,7 @@ public class AppBaseTest {
 	protected ConfigFileReader configReader;
 
 	protected LoginPage loginPage;
+	protected RemindersPage remindersPage;
 	
 	@BeforeTest
 	public void setup() {

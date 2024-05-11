@@ -1,6 +1,7 @@
 package bulldoggy.app.apputils;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,10 @@ public class AppUtilities {
 	
 	public WebElement getElement(By locator) {
 		return driver.findElement(locator);
+	}
+	
+	public List<WebElement> getElements(By locator){
+		return driver.findElements(locator);
 	}
 	
 	public void doElementClick(By locator) {
