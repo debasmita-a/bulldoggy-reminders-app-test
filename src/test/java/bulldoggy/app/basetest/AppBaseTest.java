@@ -38,6 +38,6 @@ public class AppBaseTest {
 	
 	@AfterTest
 	public void teardown() {
-		driver.quit();
+		//driver.quit();
 	}
 }

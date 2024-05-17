@@ -3,10 +3,17 @@
 
 <suite name="Bulldoggy Reminders App Test" verbose="3" thread-count="2" parallel="tests">
 
-	<test name="Launch App Test">
+	<test name="App Login Test">
 		
 		<classes>
-			<class name="bulldoggy.app.roughtest.TestAppLaunch" />
+			<class name="bulldoggy.app.apptests.LoginPageTest" />
+		</classes>
+	</test>
+	
+		<test name="App Reminders Test">
+		
+		<classes>
+			<class name="bulldoggy.app.apptests.ReminderPageTest" />
 		</classes>
 	</test>
 

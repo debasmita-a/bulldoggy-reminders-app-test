@@ -29,6 +29,10 @@ public class AppUtilities {
 		getElement(locator).click();
 	}
 	
+	public void doElementClick(WebElement ele) {
+		ele.click();
+	}
+	
 	public void doSendKeys(By locator, String keys) {
 		getElement(locator).clear();
 		getElement(locator).sendKeys(keys);

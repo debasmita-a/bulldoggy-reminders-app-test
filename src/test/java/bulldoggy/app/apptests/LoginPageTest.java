@@ -22,11 +22,5 @@ public class LoginPageTest extends AppBaseTest{
 	public void getHeaderTextTest() {
 		Assert.assertEquals(loginPage.getHeaderText(), AppConstants.APP_HEADER);
 	}
-
-	@Test
-	public void doLoginTest() {
-		loginPage.doLogin(prop.getProperty("username"), prop.getProperty("password"));
-		
-	}
 	
 }
