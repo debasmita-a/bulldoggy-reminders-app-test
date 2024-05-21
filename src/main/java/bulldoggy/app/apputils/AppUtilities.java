@@ -55,4 +55,25 @@ public class AppUtilities {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		return wait.until(ExpectedConditions.visibilityOf(getElement(locator)));
 	}
+	
+	public void clickElementWithWait(By locator, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+	    wait.until(ExpectedConditions.elementToBeClickable(locator)).click();;
+	}
+	
+	public void sendKeysWithWait(By locator, String keys, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		wait.until(ExpectedConditions.presenceOfElementLocated(locator)).sendKeys(keys);;
+	}
+	
+	public WebElement waitUntilElementIsPresent(By locator, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+	}
+	
+	public List<WebElement> waitUntilElementsArePresent(By locator, int timeout){
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+	}
+	
 }

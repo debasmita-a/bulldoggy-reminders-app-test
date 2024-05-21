@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -28,7 +29,7 @@ public class RemindersPage {
 
 	private By reminderListsHeader = By.xpath("//h3[text()='Reminder Lists']");
 
-	private By newReminderListRow = By.xpath("//div[@data-id='new-reminder-row']");
+	private By newReminderListRow = By.xpath("//div[@data-id='new-reminder-row']//p");
 	private By newReminderListItem = By.xpath("//input[@name='reminder_list_name']");
 	private By newReminderItemRow = By.id("new-reminder-item-row");
 
@@ -74,19 +75,21 @@ public class RemindersPage {
 	}
 
 	// data provider -- list of reminder list -- add
-	public void addReminderList(String reminderListName) {
-		util.getElement(newReminderListRow).click();
-		util.doSendKeys(newReminderListItem, reminderListName);
-		util.doElementClick(checkBtn);
+	public void addReminderList(String reminderListName) {		
+			util.waitUntilElementIsPresent(newReminderListRow, 5).click();			
+			util.sendKeysWithWait(newReminderListItem, reminderListName, 5);			
+			util.clickElementWithWait(checkBtn, 5);	
 	}
 	
 	// data provider -- list of reminder list -- 1. add 2.delete
-	public void deleteReminderList() {	
+	public void deleteReminderList() {
+		int size = util.getElements(deleteBtn).size();
+		for(int i=0; i<=size-1; i++) {
+			System.out.println(util.getElements(deleteBtn).size());	
+			util.clickElementWithWait(deleteBtn, 5);
+		}	
 		
-		while(util.getElements(deleteBtn).size()!=1){
-			System.out.println(util.getElements(deleteBtn).size());
-			util.getElement(By.xpath("(//p/following-sibling::img)[2]")).click();		
-		}			
+		System.out.println(util.getElements(reminderList).size());	
 	}
 
 	// data provider -- list of reminder list -- 1. add 2.update 3.delete

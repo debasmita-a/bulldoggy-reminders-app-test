@@ -67,7 +67,7 @@ public class ReminderPageTest extends AppBaseTest{
 	
 	@Test
 	public void deleteReminderListTest() {
-		//remindersPage.addReminderList(data);
+		//remindersPage.addReminderList("New List to delete");
 		remindersPage.deleteReminderList();
 	}
 	
