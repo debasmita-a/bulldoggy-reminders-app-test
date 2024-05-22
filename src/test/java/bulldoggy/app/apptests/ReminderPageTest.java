@@ -1,5 +1,8 @@
 package bulldoggy.app.apptests;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -67,28 +70,39 @@ public class ReminderPageTest extends AppBaseTest{
 	
 	@Test
 	public void deleteReminderListTest() {
-		//remindersPage.addReminderList("New List to delete");
+		remindersPage.addReminderList("New List to delete");
 		remindersPage.deleteReminderList();
 	}
 	
-	@Test
-	public void updateReminderListTest() {
-		
+	@DataProvider
+	public Object[][] updateReminderListData(){
+		return new Object[][] {
+			{"New List added", "New List updated"}
+		};
+	}
+	
+	@Test(dataProvider="updateReminderListData")
+	public void updateReminderListTest(String added, String updated) {
+		remindersPage.addReminderList(added);
+		Assert.assertEquals(remindersPage.updateReminderList(updated), updated);
 	}
 	
 	@Test
 	public void getRemindersForReminderListTest() {
-		
+
 	}
 	
 	@Test
 	public void addReminderTest() {
-		
+		remindersPage.addReminderList("new list");
+		remindersPage.addReminder(Arrays.asList("new reminder 1", "new reminder 2"));
 	}
 	
 	@Test
 	public void deleteReminderTest() {
-		
+		remindersPage.addReminderList("new list");
+		remindersPage.addReminder(Arrays.asList("new reminder 1", "new reminder 2"));
+		remindersPage.deleteReminder();
 	}
 	
 	@Test

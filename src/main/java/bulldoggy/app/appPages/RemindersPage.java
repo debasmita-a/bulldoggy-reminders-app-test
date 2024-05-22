@@ -31,12 +31,17 @@ public class RemindersPage {
 
 	private By newReminderListRow = By.xpath("//div[@data-id='new-reminder-row']//p");
 	private By newReminderListItem = By.xpath("//input[@name='reminder_list_name']");
-	private By newReminderItemRow = By.id("new-reminder-item-row");
+	private By newReminderItemRow = By.xpath("//div[@data-id='new-reminder-item-row']");
+	private By newReminderItemInput = By.xpath("//div[@data-id='new-reminder-item-row']//input");
+	
+	private By deleteReminderBtn = By.xpath("(//div[@class='reminders-item-list']//div//img)[2]");
+	
+	private By editReminderListRow = By.name("new_name");
 
 	private By reminderList = By.xpath("//div//p[@hx-target='.reminders-content']"); // list of reminders
 	private By checkBtn = By.xpath("//img[@src='/static/img/icons/icon-check-circle.svg']"); //alwways 1
-	private By editBtn = By.xpath("//div//img[contains(@hx-get,'list-row-edit') and @hx-trigger='click']"); //all
-	private By deleteBtn = By.xpath("//div//img[contains(@hx-delete,'list-row') and @hx-trigger='click']"); //all
+	private By editBtn = By.xpath("//div//img[contains(@hx-get,'list-row-edit')]"); //all
+	private By deleteBtn = By.xpath("//div//img[contains(@hx-delete,'list-row')]"); //all
 
 	private By listHeader = By.xpath("(//div//h3[@class='reminders-card-title'])[2]");
 	private By listItems = By.xpath("//div[@class='reminders-item-list']//p[contains(@hx-patch,'item-row-strike')]");
@@ -82,36 +87,38 @@ public class RemindersPage {
 	}
 	
 	// data provider -- list of reminder list -- 1. add 2.delete
-	public void deleteReminderList() {
-		int size = util.getElements(deleteBtn).size();
-		for(int i=0; i<=size-1; i++) {
-			System.out.println(util.getElements(deleteBtn).size());	
-			util.clickElementWithWait(deleteBtn, 5);
-		}	
-		
-		System.out.println(util.getElements(reminderList).size());	
+	public void deleteReminderList(){
+		util.clickElementWithWait(deleteBtn, 5);
 	}
 
 	// data provider -- list of reminder list -- 1. add 2.update 3.delete
-	public void updateReminderList() {
-
+	public String updateReminderList(String updateText) {
+		util.clickElementWithWait(editBtn, 5);
+		util.sendKeysWithWait(editReminderListRow, updateText, 5);
+		util.clickElementWithWait(checkBtn, 5);
+	    util.getElement(listHeader);
+		return util.waitUntilElementIsPresent(listHeader, 5).getText();
 	}
 
 	// data provider -- list of reminder list -- 1. add, 2.print list, 3. delete
 	public void getRemindersForReminderList() {
-
+		
 	}
 
 	// data provider -- list of reminder list -- 1. add ; list of reminders for each
 	// list -- 1. add
-	public void addReminder() {
-
+	public void addReminder(List<String> reminderList) {
+		for(String s : reminderList) {
+			util.clickElementWithWait(newReminderItemRow, 5);
+			util.sendKeysWithWait(newReminderItemInput, s, 5);
+			util.clickElementWithWait(checkBtn, 5);
+		}
 	}
 
 	// data provider -- list of reminder list -- 1. add ; list of reminders for each
 	// list -- 1. add, 2. delete
 	public void deleteReminder() {
-
+		util.clickElementWithWait(deleteReminderBtn, 5);
 	}
 
 	// data provider -- list of reminder list -- 1. add ; list of reminders for each
